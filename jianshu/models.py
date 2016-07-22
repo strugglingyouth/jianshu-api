@@ -12,7 +12,7 @@ class ArticleDetail(models.Model):
     """
     image = models.CharField('图片URL', max_length=100)
     title = models.CharField('文章标题', max_length=100)
-    #content = models.TextField('文章内容')
+    content = models.TextField('文章内容', null=True)
     created = models.CharField('发表时间' , max_length=100)
     views = models.PositiveIntegerField('阅读数', default=0)
     comments = models.PositiveIntegerField('评论数', default=0)
