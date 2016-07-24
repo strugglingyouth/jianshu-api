@@ -10,14 +10,14 @@ from jianshu.models import ArticleList, ArticleDetail
 class ArticleListViewSet(viewsets.ReadOnlyModelViewSet):
     """
     """
-    queryset = ArticleList.objects.all()
-    serializer_class =  ArticleListSerializer
+    queryset = ArticleList.objects.all().order_by("-created")[:15]
+    serializer_class = ArticleListSerializer
 
 
 class ArticleDetailViewSet(viewsets.ReadOnlyModelViewSet):
     """
     """
-    queryset = ArticleDetail.objects.all()
+    queryset = ArticleDetail.objects.all().order_by("-created")[:15]
     serializer_class = ArticleDetailSerializer
 
 
