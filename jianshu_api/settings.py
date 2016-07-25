@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     'jianshu',
     'rest_framework',
+    'article',
 ]
 
 MIDDLEWARE_CLASSES = [
