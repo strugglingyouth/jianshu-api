@@ -25,7 +25,7 @@ SECRET_KEY = 'a7z#iqvwbu&gy50mv)qudc%h6i(auls5z865qk4phk8$f_euid'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -126,6 +126,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES = os.path.join(BASE_DIR, './static')
 
-
-
+STATIC_ROOT = '/root/py/jianshu/static/'
