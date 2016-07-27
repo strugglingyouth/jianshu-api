@@ -3,7 +3,7 @@
 
 
 """
-    爬取简书热门的所有文章，总共99条
+    爬取简书热门的所有文章，总共 300 条
 """
 
 
@@ -19,7 +19,7 @@ import MySQLdb
 import time
 from collections import OrderedDict
 from colorama import init, Fore
-
+from jianshu_api.settings import DATABASES
 
 ct = 1
 
@@ -77,25 +77,28 @@ def get_details(mysql, page, base_url, domain_name, article_table):
         tag_a = tag.div.div.find_all('a')
         try:
             views = tag_a[0].get_text(strip=True)
-            article['article_views'] = filter(str.isdigit, str(views))
+            article['article_views_count'] = filter(str.isdigit, str(views))
         except Exception as e:
-            article['article_views'] = '0'
+            article['article_views_count'] = '0'
         try:
             comments = tag_a[1].get_text(strip=True)
-            article['article_comments'] = filter(str.isdigit, str(comments))
+            article['public_comments_count'] = filter(str.isdigit, str(comments))
         except Exception as e:
-            article['article_comments'] = '0'
+            article['public_comments_count'] = '0'
 
         tag_span = tag.div.div.find_all('span')
-        likes = tag_span[0].get_text(strip=True)
-        article['article_likes'] = filter(str.isdigit, str(likes))
+        try:
+            likes = tag_span[0].get_text(strip=True)
+            article['article_likes_count'] = filter(str.isdigit, str(likes))
+        except Exception as e:
+            article['article_likes_count'] = '0'
 
         # 阅读，评论，喜欢一定存在，打赏不一定有
         try:
             tip = tag_span[1].get_text()
-            article['article_tip'] = filter(str.isdigit, str(tip))
+            article['total_rewards_count'] = filter(str.isdigit, str(tip))
         except Exception as e:
-            article['article_tip'] = '0'
+            article['total_rewards_count'] = '0'
 
         body = get_body(article_url)
 
@@ -118,6 +121,7 @@ def get_details(mysql, page, base_url, domain_name, article_table):
 
     data_url = get_data_url(base_url, domain_name)
     
+    # 获取 data-url 中的 page
     page = data_url.split('&')[-1]
      
 
@@ -128,7 +132,6 @@ def get_details(mysql, page, base_url, domain_name, article_table):
     else:
         print Fore.GREEN + "----------------------------简书热门所有文章爬取完毕，共有%s篇--------------------------",ct
         return
-
 
 def get_body(article_url):
     """
@@ -193,12 +196,12 @@ class Mysql(object):
 
 if __name__ == '__main__':
 
-    host = '127.0.0.1'
-    user = 'root'
-    passwd = '123456'
-    db = 'jianshu'
-    port = 3306
-    article_table = 'article_article'
+    host = DATABASES['default']['HOST']
+    user = DATABASES['default']['USER']
+    passwd = DATABASES['default']['PASSWORD']
+    db = DATABASES['default']['NAME']
+    port = DATABASES['default']['PORT']
+    article_table = 'jianshu_hotarticle'
 
     t = 1
     # 通过使用autoreset参数可以让变色效果只对当前输出起作用，输出完成后颜色恢复默认设置

@@ -18,10 +18,10 @@ class article(models.Model):
     article_title = models.CharField('文章标题', max_length=100)
     article_body = models.TextField('文章内容', null=True)
     article_time = models.CharField('发表时间' , max_length=100, null=True)
-    article_views = models.CharField('阅读数', max_length=100)
-    article_comments = models.CharField('评论数', max_length=100)
-    article_likes = models.CharField('喜欢', max_length=100)
-    article_tip = models.CharField('打赏', max_length=100)
+    article_views_counts = models.CharField('阅读数', max_length=100)
+    public_comments_count = models.CharField('评论数', max_length=100)
+    article_likes_count = models.CharField('喜欢', max_length=100)
+    total_rewards_count = models.CharField('打赏', max_length=100)
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:

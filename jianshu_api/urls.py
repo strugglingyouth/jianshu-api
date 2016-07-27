@@ -20,8 +20,12 @@ from jianshu import views
 
 
 router = DefaultRouter()
-router.register(r'articlelist', views.ArticleListViewSet)
-router.register(r'articledetail', views.ArticleDetailViewSet)
+router.register(r'article_news_list', views.ArticleListViewSet)
+router.register(r'article_news_detail', views.ArticleDetailViewSet)
+router.register(r'hot_article', views.HotArticleViewSet)
+
+
+
 
 
 urlpatterns = [

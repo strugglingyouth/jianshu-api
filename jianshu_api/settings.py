@@ -40,7 +40,6 @@ INSTALLED_APPS = [
 
     'jianshu',
     'rest_framework',
-    'article',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -85,6 +84,7 @@ DATABASES = {
         'HOST': '127.0.0.1',
         'USER': 'root',
         'PASSWORD': '123456',
+        'PORT': 3306
     }
 }
 
