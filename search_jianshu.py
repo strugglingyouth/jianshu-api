@@ -121,7 +121,7 @@ if __name__ == '__main__':
     passwd = DATABASES['default']['PASSWORD']
     db = DATABASES['default']['NAME']
     port = DATABASES['default']['PORT']
-    article_table = 'jianshu_search_article'
+    article_table = 'jianshu_searcharticle'
 
     t = 1
     # 通过使用autoreset参数可以让变色效果只对当前输出起作用，输出完成后颜色恢复默认设置

@@ -78,7 +78,7 @@ class HotArticle(models.Model):
        return self.article_title
 
 
-class search_article(models.Model):
+class SearchArticle(models.Model):
     """
         搜索到的文章
     """
