@@ -23,6 +23,7 @@ router = DefaultRouter()
 router.register(r'article_news_list', views.ArticleListViewSet)
 router.register(r'article_news_detail', views.ArticleDetailViewSet)
 router.register(r'hot_article', views.HotArticleViewSet)
+router.register(r'search_article', views.SearchArticleViewSet)
 
 
 
