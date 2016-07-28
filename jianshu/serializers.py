@@ -19,7 +19,7 @@ class ArticleDetailSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = ArticleDetail 
-        fields = ('image', 'title', 'body', 'created', 'views', 'comments', 'likes', 'tip', 'article_abstract')
+        fields = ('image', 'title', 'body', 'time', 'views_count', 'public_comments_count', 'likes_count', 'total_rewards_count', 'article_abstract')
 
 
 class HotArticleSerializer(serializers.ModelSerializer): 

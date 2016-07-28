@@ -142,6 +142,7 @@ def get_body(article_url):
     tags = soup('div', class_="show-content")
     body = str(tags[0])
     body = body.replace('"', '\\"')
+    body = body.replace("'","\\'")
     return body
 
 
