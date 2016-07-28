@@ -121,9 +121,6 @@ def get_details(mysql, page, base_url, domain_name, article_table):
 
     data_url = get_data_url(base_url, domain_name)
     
-    # 获取 data-url 中的 page
-    page = data_url.split('&')[-1]
-     
 
     # 爬取 data_url 中的内容
     if data_url:
