@@ -40,13 +40,13 @@
 “热门” 目录每页有 20 篇文章，底部有一个 “点击查看更多” 的按钮，此按钮对应一个 `data-url` 用于加载下一页的文章。爬取当前页面的所有文章后，提取页面底部的 `data-url` ，再爬取对应 `URL` 页面的文章，依此步骤递归爬取，可以获得 “热门” 目录中的所有文章。爬取到文章的信息有“文章ID”，“文章标题”，“文章URL”，“作者”，“作者的URL”，“缩略图URL”，“文章内容”，“发表时间”，“阅读数”，“评论数”，“喜欢”，“打赏”。
 
 
-代码中使用 `Django orm` 来生成所需要的数据库，若不熟悉 `Django`，请参阅官方文档 [ Django 官方文档 ](https://www.djangoproject.com/) 或者对应的 [中文翻译文档](http://python.usyiyi.cn/django/index.html)。S数据库设计代码参考 **jianshu** 目录下 `models.py` 文件，爬虫代码参考 `popular_articles_jianshu.py`` 文件。 
+代码中使用 **Django orm** 来生成所需要的数据库，若不熟悉 **Django**，请参阅官方文档 [ Django 官方文档 ](https://www.djangoproject.com/) 或者对应的 [中文翻译文档](http://python.usyiyi.cn/django/index.html)。S数据库设计代码参考 **jianshu** 目录下 `models.py` 文件，爬虫代码参考 `popular_articles_jianshu.py`` 文件。 
 
 ##
 
 ### 3. 爬取简书新上榜的文章
 
-对于新上榜中的内容，每次只爬取当前页面中的所有文章，15 分钟爬取一次，不会递归爬取所有，API 分为文章概要和文章详细信息，文章概要包含“文章ID”，“文章标题”，“文章URL”，“作者”和“作者的URL”，文章详细信息包括“缩略图URL”，“文章标题”，“文章内容”，“发表时间”，“阅读数”，“评论数”，“喜欢”，“打赏”，API 每次返回 18 篇文章的信息。
+对于新上榜中的内容，每次只爬取当前页面中的所有文章，15 分钟爬取一次，不会递归爬取所有，**API** 分为文章概要和文章详细信息，文章概要包含“文章ID”，“文章标题”，“文章URL”，“作者”和“作者的URL”，文章详细信息包括“缩略图URL”，“文章标题”，“文章内容”，“发表时间”，“阅读数”，“评论数”，“喜欢”，“打赏”，API 每次返回 18 篇文章的信息。
 
 ##
 
@@ -54,7 +54,7 @@
 
 此功能有代完善，由于本人对前端代码不太熟悉，所以只能分析出搜索到的首页链接，爬取也只能获得首页的 10 篇文章，如果有朋友知道怎样爬取，麻烦告知下，非常感谢！
 
-下面以搜索 python 为例说明，用 chrome 的开发者者工具可以查看到请求的 URL 以及 response 的数据。
+下面以搜索 **python** 为例说明，用 **chrome** 的开发者者工具可以查看到请求的 **URL** 以及 `response` 的数据。
 
 ##
 
@@ -62,7 +62,7 @@
 
 ##
 
-下面的是 response 的数据，也正是我们要抓取的内容。数据是以 list 的形式返回的，list 里面的数据时 dict 的形式。
+下面的是 `response` 的数据，也正是我们要抓取的内容。数据是以 `list` 的形式返回的，`list` 里面的数据是一个 `dict` 的形式。
 
 ##
 
@@ -72,7 +72,7 @@
 
 ### 5. 生成 API
 
-将上面爬取到的文章保存到 MySQL 中，使用 ** Django REST framework** 来生成 API，若对此功能不熟悉的请查 [ Django REST framework 官方文档 ](http://www.django-rest-framework.org/)
+将上面爬取到的文章保存到 **MySQL** 中，使用 ** Django REST framework** 来生成 **API**，若对此功能不熟悉的请查 [ Django REST framework 官方文档 ](http://www.django-rest-framework.org/)
 
 ##
 
@@ -82,9 +82,9 @@
 
 ### 6. 部署上线
 
-* 使用 nginx + uwsgi + django + supervisor 进行环境部署
+* 使用 **nginx + uwsgi + django + supervisor** 进行环境部署
 
-* 使用 docker 进行环境部署
+* 使用 **docker** 进行环境部署
 
 > ### -_- 目前代码写的比较散乱，后面还会不断重构，如有任何建议，欢迎提 issue，欢迎 fork，pr，当然也别忘了 star 哦！
 
