@@ -12,11 +12,20 @@
 
 ### 1. 网页源码分析：
 
+以下是简书首页文章处的源码：
+
+##
+
 ![文章源码](http://cdn.tianfeiyu.com/jianshuindex.png)
+
+##
 
 若文章没有被打赏过，则“打赏”在网页源码中不会存在，代码中会进行处理，剩下的都会存在，但在爬取“热门”目录下的文章时，“阅读数”，“评论数”，“喜欢” 也会出问题，所以代码中也都做了相应的处理。
 
+##
 ![data-url](http://cdn.tianfeiyu.com/data-url.png)
+
+##
 
 `data-url` 对应下一页的 `URL`。
 
@@ -47,18 +56,29 @@
 
 下面以搜索 python 为例说明，用 chrome 的开发者者工具可以查看到请求的 URL 以及 response 的数据。
 
+##
+
 ![搜索文章](http://cdn.tianfeiyu.com/search.png)
+
+##
 
 下面的是 response 的数据，也正是我们要抓取的内容。数据是以 list 的形式返回的，list 里面的数据时 dict 的形式。
 
+##
+
 ![响应的数据](http://cdn.tianfeiyu.com/response.png)
+
+##
 
 ### 5. 生成 API
 
 将上面爬取到的文章保存到 MySQL 中，使用 ** Django REST framework** 来生成 API，若对此功能不熟悉的请查 [ Django REST framework 官方文档 ](http://www.django-rest-framework.org/)
 
+##
+
 ![简书 API](http://cdn.tianfeiyu.com/jianshuapi.png)
 
+##
 
 ### 6. 部署上线
 
@@ -68,4 +88,4 @@
 
 > ### -_- 目前代码写的比较散乱，后面还会不断重构，如有任何建议，欢迎提 issue，欢迎 fork，pr，当然也别忘了 star 哦！
 
----
+##
