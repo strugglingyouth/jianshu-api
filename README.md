@@ -18,7 +18,7 @@
 
 爬取简书“新上榜”，“热门”中的文章并保存在 MySQL 中。爬虫使用 **python** 的 **BeautifulSoup** 模块进行爬取，**BeautifulSoup** 模块的使用方法可以参照 [BeautifulSoup 模块使用指南](http://www.jianshu.com/p/2b783f7914c6)。爬取“热门”目录下所有能加载到的文章，最多可以加载 15 页，每一小时爬取一次。对于新上榜中的内容，每次只爬取当前页面中的所有文章，15 分钟爬取一次，不会递归爬取所有页。
 
-代码中使用 **Django orm** 来生成所需要的数据库，若不熟悉 **Django**，请参阅官方文档 [ Django 官方文档 ](https://www.djangoproject.com/) 或者对应的 [中文翻译文档](http://python.usyiyi.cn/django/index.html)。S数据库设计代码参考 **jianshu** 目录下 `models.py` 文件，爬虫代码参考 `popular_articles_jianshu.py` 文件。 
+代码中使用 **Django orm** 来生成所需要的数据库，若不熟悉 **Django**，请参阅官方文档 [ Django 官方文档 ](https://www.djangoproject.com/) 或者对应的 [中文翻译文档](http://python.usyiyi.cn/django/index.html)。数据库设计代码参考 **jianshu** 目录下 `models.py` 文件，爬虫代码参考 `popular_articles_jianshu.py` 文件。 
 
 
 
