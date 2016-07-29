@@ -25,13 +25,9 @@ router.register(r'article_news_detail', views.ArticleDetailViewSet)
 router.register(r'hot_article', views.HotArticleViewSet)
 router.register(r'search_article', views.SearchArticleViewSet)
 
-
-
-
-
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    #url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
 ]
