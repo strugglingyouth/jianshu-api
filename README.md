@@ -4,18 +4,19 @@
 
 简书 API 测试地址 : [http://222.24.63.118:8080/](http://222.24.63.118:8080/)
 
+* [爬取简书全站文章并生成 API（一）](http://www.jianshu.com/p/c546c175b763)
+* [爬取简书全站文章并生成 API（二）](http://www.jianshu.com/p/19e010b2a4c0)
+* [爬取简书全站文章并生成 API（三）](http://www.jianshu.com/p/f30788fddaf2)
+* [爬取简书全站文章并生成 API（四）](http://www.jianshu.com/p/9e1d12500f78)
 
 ### 1. 爬取前的准备
 
 了解简书整个网站的结构以及分析网页源代码：
 
-* [爬取简书全站文章并生成 API（一）](http://www.jianshu.com/p/c546c175b763)
 
 ### 2. 爬取简书全站
 
 爬取简书“新上榜”，“热门”中的文章并保存在 MySQL 中。
-
-* [爬取简书全站文章并生成 API（二）](http://www.jianshu.com/p/19e010b2a4c0)
 
 
 ### 3. 爬取搜索到的文章
@@ -30,16 +31,10 @@
 
 将上面爬取到的文章保存到 **MySQL** 中，使用 **Django REST framework** 来生成 **API**。
 
-* [爬取简书全站文章并生成 API（三）](http://www.jianshu.com/p/f30788fddaf2)
-
-
 ![简书 API](http://cdn.tianfeiyu.com/jianshuapi.png)
 
 
 ### 5. 部署上线
-
-* [爬取简书全站文章并生成 API（四）](http://www.jianshu.com/p/9e1d12500f78)
-
 
 * 使用 **nginx + uwsgi + django + supervisor** 进行环境部署
 
