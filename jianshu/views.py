@@ -26,7 +26,7 @@ class HotArticleViewSet(viewsets.ReadOnlyModelViewSet):
     """
         热门文章详细信息
     """
-    queryset = HotArticle.objects.all().order_by("-created")[:18]
+    queryset = HotArticle.objects.all().order_by("-created")[:20]
     serializer_class = HotArticleSerializer
 
 class SearchArticleViewSet(viewsets.ReadOnlyModelViewSet):

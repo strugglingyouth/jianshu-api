@@ -18,26 +18,48 @@ import time
 from collections import OrderedDict
 from colorama import init, Fore
 from jianshu_api.settings import DATABASES
+import subprocess
 import requests
 
 
 ct = 1 
 
-def get_details(mysql, base_url, domain_name, article_table):
+def get_pages(mysql, base_url, domain_name, article_table, search_name):
     
     """
         获取文章详细信息
         将文章id，url，user，user_url，title，image，body，time，views，comments，likes，tip 存入 article中
     """
-    
-    global ct
-    article = OrderedDict()
 
     html = requests.get(base_url).content
 
     result = eval(html)
+    
+    type = result['type']
 
+    endpages = result['total_pages'] + 1
 
+    print "type:%s,endpages:%s" %(type,endpages)
+    for page in range(1, endpages):
+        base_url = 'http://www.jianshu.com/search/do?q=' + search_name + '&page=%s&type=%s' %(page, type)     
+        print base_url
+        time.sleep(10)
+        get_details(mysql, base_url, domain_name, article_table)
+        
+def get_details(mysql, base_url, domain_name, article_table ):
+    """
+
+    """
+
+    global ct
+    article = OrderedDict()
+    cmd = 'curl -s --connect-timeout 10 %s' % base_url
+    p = subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+
+    res = p.stdout.readlines()
+
+    result = eval(res[0])
+    print result
     for tag in result['entries']:
         article['article_id'] = str(tag['id'])
         article['article_title'] = tag['title']
@@ -64,6 +86,8 @@ def get_details(mysql, base_url, domain_name, article_table):
             print Fore.RED + "article_table：数据保存失败！"
 
         ct += 1
+
+
 class Mysql(object):
 
     def get_current_time(self):
@@ -131,4 +155,7 @@ if __name__ == '__main__':
     base_url = 'http://www.jianshu.com/search/do?q=' + search_name
 
     mysql = Mysql(host, user, passwd, db, port)
-    get_details(mysql, base_url, domain_name, article_table)
+    get_pages(mysql, base_url, domain_name, article_table, search_name)
+
+
+
