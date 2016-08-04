@@ -18,7 +18,6 @@ import time
 from collections import OrderedDict
 from colorama import init, Fore
 from jianshu_api.settings import DATABASES
-import subprocess
 import requests
 
 
@@ -53,12 +52,13 @@ def get_details(mysql, base_url, domain_name, article_table ):
 
     global ct
     article = OrderedDict()
-    cmd = 'curl -s --connect-timeout 10 %s' % base_url
-    p = subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    #cmd = 'curl -s --connect-timeout 10 %s' % base_url
+    #p = subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
-    res = p.stdout.readlines()
-
-    result = eval(res[0])
+    #res = p.stdout.readlines()
+    html = requests.get(base_url).content
+    result = eval(html)
+    #result = eval(res[0])
     print result
     for tag in result['entries']:
         article['article_id'] = str(tag['id'])
