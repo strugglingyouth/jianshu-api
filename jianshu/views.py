@@ -1,8 +1,8 @@
 #coding:utf-8
 
 from rest_framework import viewsets
-from jianshu.serializers import ArticleListSerializer, ArticleDetailSerializer, HotArticleSerializer
-from jianshu.models import ArticleList, ArticleDetail, HotArticle
+from jianshu.serializers import ArticleListSerializer, ArticleDetailSerializer, HotArticleSerializer, SearchArticleSerializer
+from jianshu.models import ArticleList, ArticleDetail, HotArticle, SearchArticle
 
 
 
@@ -28,6 +28,13 @@ class HotArticleViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = HotArticle.objects.all().order_by("-created")[:18]
     serializer_class = HotArticleSerializer
+
+class SearchArticleViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+        搜索到文章的详细信息
+    """
+    queryset = SearchArticle.objects.all().order_by("-created")[:10]
+    serializer_class = SearchArticleSerializer
 
 
 

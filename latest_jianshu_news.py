@@ -114,7 +114,7 @@ def get_body(article_url):
     body = str(tags[0])
 
     body = body.replace('"','\\"')
-    body = body.replace("'","\'")
+    body = body.replace("'","\\'")
     return body
 
 class Mysql(object):
