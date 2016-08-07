@@ -95,14 +95,18 @@ def get_details(mysql, base_url, domain_name, article_list_table, article_detail
         result = mysql.insert_data(article_list_table, article_list)
         if result:
             print Fore.GREEN + "article_list_table：数据保存成功！" 
+            result = mysql.insert_data(article_detail_table, article_detail)
+            if result:
+                print Fore.GREEN + "article_detail_table: 数据保存成功！" 
+            else:
+                print Fore.RED + "article_detail_table: 数据保存失败！"  
         else:
-            print Fore.RED + "article_list_table：数据保存失败！" 
+            result = mysql.update_timestamp(article_detail_table, article_detail)
+            if result:
+                print Fore.GREEN + "article_detail_table: 更新时间戳成功！" 
+            else:
+                print Fore.GREEN + "article_detail_table: 更新时间戳失败！" 
         
-        result = mysql.insert_data(article_detail_table, article_detail)
-        if result:
-            print Fore.GREEN + "article_detail_table: 数据保存成功！" 
-        else:
-            print Fore.RED + "article_detail_table: 数据保存失败！"  
         ct += 1
 def get_body(article_url):
     """
@@ -141,20 +145,40 @@ class Mysql(object):
             values = '"' + values + '"'
             try:
                 sql = "insert into %s (%s) values(%s)" %(table, cols, values)
-                result = self.cur.execute(sql) 
+                self.cur.execute(sql) 
                 self.db.commit()
-                if result:
-                    return 1
-                else:
-                    return 0 
+                return 1
             except MySQLdb.Error as e:
                 self.db.rollback()
                 if "key 'PRIMARY'" in e.args[1]:
-                     print Fore.RED + self.get_current_time(), "数据已存在，未插入数据"
+                    print Fore.RED + self.get_current_time()+ "  数据已存在，未插入数据,更新时间戳："
+                    result = self.update_timestamp(table, my_dict)
+                    if result:
+                        print Fore.GREEN + "%s: 更新时间戳成功！" % table
+                    else:
+                        print Fore.GREEN + "%s: 更新时间戳失败！" % table 
+                    return 0
                 else:
                     print Fore.RED + self.get_current_time(), "插入数据失败，原因 %d: %s" % (e.args[0], e.args[1])
+                return 0
         except MySQLdb.Error as e:
             print Fore.RED + self.get_current_time(), "数据库错误，原因%d: %s" % (e.args[0], e.args[1])
+            return 0
+    def update_timestamp(self, table, my_dict):
+        title_field = my_dict.keys()[1]
+        title_field_values = my_dict.values()[1]
+        datetime = self.get_current_time()
+        sql = "update %s set created='%s' where %s='%s' " %(table, datetime, title_field, title_field_values)
+        #print "sql:",sql  
+        self.cur.execute(sql) 
+        self.db.commit()
+        return 1
+        
+
+    def close_connect(self):
+        self.cur.close()
+        self.db.close()
+
 
 if __name__ == '__main__':
 
@@ -175,7 +199,7 @@ if __name__ == '__main__':
 
     mysql = Mysql(host, user, passwd, db, port)
     get_details(mysql, base_url, domain_name, article_list_table, article_detail_table)
-
+    mysql.close_connect()
     
 
 
