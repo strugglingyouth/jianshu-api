@@ -20,10 +20,10 @@ from jianshu import views
 
 
 router = DefaultRouter()
-router.register(r'article_news_list', views.ArticleListViewSet)
-router.register(r'article_news_detail', views.ArticleDetailViewSet)
-router.register(r'hot_article', views.HotArticleViewSet)
-router.register(r'search_article', views.SearchArticleViewSet)
+router.register(r'api/v1/article_news_list', views.ArticleListViewSet)
+router.register(r'api/v1/article_news_detail', views.ArticleDetailViewSet)
+router.register(r'api/v1/hot_article', views.HotArticleViewSet)
+router.register(r'api/v1/search_article', views.SearchArticleViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
