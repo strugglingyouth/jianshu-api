@@ -120,7 +120,7 @@ def get_details(mysql, page, base_url, domain_name, article_table):
         ct += 1
 
     data_url = get_data_url(base_url, domain_name)
-    
+
 
     # 爬取 data_url 中的内容
     if data_url:
@@ -147,11 +147,9 @@ class Mysql(object):
 
     def get_current_time(self):
         created_time = time.strftime(
-            '[%Y-%m-%d %H:%M:%S]',
+            '%Y-%m-%d %H:%M:%S',
             time.localtime(
                 time.time()))
-        created_time = created_time.split('[')[1]
-        created_time = created_time.split(']')[0]
         return created_time
 
     def __init__(self, host, user, passwd, db, port):

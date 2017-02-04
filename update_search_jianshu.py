@@ -21,10 +21,10 @@ from jianshu_api.settings import DATABASES
 import requests
 
 
-ct = 1 
+ct = 1
 
 def get_pages(mysql, base_url, domain_name, article_table, search_name):
-    
+
     """
         获取文章详细信息
         将文章id，url，user，user_url，title，image，body，time，views，comments，likes，tip 存入 article中
@@ -33,18 +33,18 @@ def get_pages(mysql, base_url, domain_name, article_table, search_name):
     html = requests.get(base_url).content
 
     result = eval(html)
-    
+
     type = result['type']
 
     endpages = result['total_pages'] + 1
 
     print "type:%s,endpages:%s" %(type,endpages)
     for page in range(1, endpages):
-        base_url = 'http://www.jianshu.com/search/do?q=' + search_name + '&page=%s&type=%s' %(page, type)     
+        base_url = 'http://www.jianshu.com/search/do?q=' + search_name + '&page=%s&type=%s' %(page, type)
         print base_url
         time.sleep(10)
         get_details(mysql, base_url, domain_name, article_table)
-        
+
 def get_details(mysql, base_url, domain_name, article_table ):
     """
 
@@ -92,11 +92,9 @@ class Mysql(object):
 
     def get_current_time(self):
         created_time = time.strftime(
-            '[%Y-%m-%d %H:%M:%S]',
+            '%Y-%m-%d %H:%M:%S',
             time.localtime(
                 time.time()))
-        created_time = created_time.split('[')[1]
-        created_time = created_time.split(']')[0]
         return created_time
 
     def __init__(self, host, user, passwd, db, port):

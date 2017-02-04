@@ -9,9 +9,9 @@
 __author__ = 'tianfeiyu'
 
 
-import sys  
-reload(sys)  
-sys.setdefaultencoding('utf-8') 
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 from bs4 import BeautifulSoup
 import requests
 import MySQLdb
@@ -28,14 +28,14 @@ def get_details(mysql, base_url, domain_name, article_list_table, article_detail
     """
     article_list = OrderedDict()
     article_detail = OrderedDict()
-    html = requests.get(base_url).content  
+    html = requests.get(base_url).content
 
     # html 是网页的源码，soup 是获得一个文档的对象
     soup = BeautifulSoup(html, 'html.parser', from_encoding='utf-8')
     tags = soup.find_all('li', class_="have-img")
     print Fore.YELLOW + "---------------all-------------------:",len(tags)
     ct = 1
-    
+
     for tag in tags:
         image = tag.img['src'].split('?')[0]
         article_user = tag.p.a.get_text()
@@ -53,7 +53,7 @@ def get_details(mysql, base_url, domain_name, article_list_table, article_detail
         tag_a = tag.div.div.find_all('a')
         views = tag_a[0].get_text(strip=True)
         views = filter(str.isdigit, str(views))
-        
+
         comments = tag_a[1].get_text(strip=True)
         comments = filter(str.isdigit, str(comments))
 
@@ -73,7 +73,7 @@ def get_details(mysql, base_url, domain_name, article_list_table, article_detail
         article_list['article_title'] = article_title
         article_list['article_url'] = article_url
         article_list['article_user'] = article_user
-        article_list['article_user_url'] = article_user_url 
+        article_list['article_user_url'] = article_user_url
 
         article_detail['image'] = image
         article_detail['title'] = article_title
@@ -87,26 +87,26 @@ def get_details(mysql, base_url, domain_name, article_list_table, article_detail
         created_time = mysql.get_current_time()
         article_list['created'] = created_time
         article_detail['created'] = created_time
-        
+
         print Fore.YELLOW + "----开始插入第 %s 条数据----" %ct
         for key,values in article_list.items():
             print key+':'+values
 
         result = mysql.insert_data(article_list_table, article_list)
         if result:
-            print Fore.GREEN + "article_list_table：数据保存成功！" 
+            print Fore.GREEN + "article_list_table：数据保存成功！"
             result = mysql.insert_data(article_detail_table, article_detail)
             if result:
-                print Fore.GREEN + "article_detail_table: 数据保存成功！" 
+                print Fore.GREEN + "article_detail_table: 数据保存成功！"
             else:
-                print Fore.RED + "article_detail_table: 数据保存失败！"  
+                print Fore.RED + "article_detail_table: 数据保存失败！"
         else:
             result = mysql.update_timestamp(article_detail_table, article_detail)
             if result:
-                print Fore.GREEN + "article_detail_table: 更新时间戳成功！" 
+                print Fore.GREEN + "article_detail_table: 更新时间戳成功！"
             else:
-                print Fore.GREEN + "article_detail_table: 更新时间戳失败！" 
-        
+                print Fore.GREEN + "article_detail_table: 更新时间戳失败！"
+
         ct += 1
 def get_body(article_url):
     """
@@ -126,9 +126,7 @@ class Mysql(object):
         保存文章到 mysql
     """
     def get_current_time(self):
-        created_time = time.strftime('[%Y-%m-%d %H:%M:%S]', time.localtime(time.time()))
-        created_time = created_time.split('[')[1]
-        created_time = created_time.split(']')[0]
+        created_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
         return created_time
     def __init__(self, host, user, passwd, db, port):
         try:
@@ -137,7 +135,7 @@ class Mysql(object):
         except MySQLdb.Error as e:
             print Fore.RED + '连接数据库失败'
             print Fore.RED + self.get_current_time(),'[%Y-%m-%d %H:%M:%S]',time.localtime(time.time())
-                             
+
     def insert_data(self, table, my_dict):
         try:
             cols = ','.join(my_dict.keys())
@@ -145,7 +143,7 @@ class Mysql(object):
             values = '"' + values + '"'
             try:
                 sql = "insert into %s (%s) values(%s)" %(table, cols, values)
-                self.cur.execute(sql) 
+                self.cur.execute(sql)
                 self.db.commit()
                 return 1
             except MySQLdb.Error as e:
@@ -156,7 +154,7 @@ class Mysql(object):
                     if result:
                         print Fore.GREEN + "%s: 更新时间戳成功！" % table
                     else:
-                        print Fore.GREEN + "%s: 更新时间戳失败！" % table 
+                        print Fore.GREEN + "%s: 更新时间戳失败！" % table
                     return 0
                 else:
                     print Fore.RED + self.get_current_time(), "插入数据失败，原因 %d: %s" % (e.args[0], e.args[1])
@@ -169,11 +167,11 @@ class Mysql(object):
         title_field_values = my_dict.values()[1]
         datetime = self.get_current_time()
         sql = "update %s set created='%s' where %s='%s' " %(table, datetime, title_field, title_field_values)
-        #print "sql:",sql  
-        self.cur.execute(sql) 
+        #print "sql:",sql
+        self.cur.execute(sql)
         self.db.commit()
         return 1
-        
+
 
     def close_connect(self):
         self.cur.close()
@@ -189,9 +187,9 @@ if __name__ == '__main__':
     port = DATABASES['default']['PORT']
 
     # 保存文章所用到的表
-    article_list_table = 'jianshu_articlelist' 
+    article_list_table = 'jianshu_articlelist'
     article_detail_table = 'jianshu_articledetail'
-    
+
     # 通过使用autoreset参数可以让变色效果只对当前输出起作用，输出完成后颜色恢复默认设置
     init(autoreset=True)
     domain_name = 'http://www.jianshu.com'
@@ -200,7 +198,7 @@ if __name__ == '__main__':
     mysql = Mysql(host, user, passwd, db, port)
     get_details(mysql, base_url, domain_name, article_list_table, article_detail_table)
     mysql.close_connect()
-    
+
 
 
 
